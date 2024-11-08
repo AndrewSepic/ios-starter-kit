@@ -14,6 +14,7 @@
 		EB32D4A32CDE80F3000D4F68 /* Starter_KitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB32D4A22CDE80F3000D4F68 /* Starter_KitTests.swift */; };
 		EB32D4AD2CDE80F3000D4F68 /* Starter_KitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB32D4AC2CDE80F3000D4F68 /* Starter_KitUITests.swift */; };
 		EB32D4AF2CDE80F3000D4F68 /* Starter_KitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB32D4AE2CDE80F3000D4F68 /* Starter_KitUITestsLaunchTests.swift */; };
+		EB32D4BD2CDE8EDA000D4F68 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = EB32D4BC2CDE8EDA000D4F68 /* MapboxMaps */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		EB32D4A82CDE80F3000D4F68 /* Starter KitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Starter KitUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB32D4AC2CDE80F3000D4F68 /* Starter_KitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starter_KitUITests.swift; sourceTree = "<group>"; };
 		EB32D4AE2CDE80F3000D4F68 /* Starter_KitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starter_KitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		EB32D4BE2CDE9003000D4F68 /* Starter-Kit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Starter-Kit-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB32D4BD2CDE8EDA000D4F68 /* MapboxMaps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +97,7 @@
 		EB32D4902CDE80F1000D4F68 /* Starter Kit */ = {
 			isa = PBXGroup;
 			children = (
+				EB32D4BE2CDE9003000D4F68 /* Starter-Kit-Info.plist */,
 				EB32D4912CDE80F1000D4F68 /* Starter_KitApp.swift */,
 				EB32D4932CDE80F1000D4F68 /* ContentView.swift */,
 				EB32D4952CDE80F3000D4F68 /* Assets.xcassets */,
@@ -143,6 +147,9 @@
 			dependencies = (
 			);
 			name = "Starter Kit";
+			packageProductDependencies = (
+				EB32D4BC2CDE8EDA000D4F68 /* MapboxMaps */,
+			);
 			productName = "Starter Kit";
 			productReference = EB32D48E2CDE80F1000D4F68 /* Starter Kit.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +222,9 @@
 				Base,
 			);
 			mainGroup = EB32D4852CDE80F1000D4F68;
+			packageReferences = (
+				EB32D4BB2CDE8EDA000D4F68 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+			);
 			productRefGroup = EB32D48F2CDE80F1000D4F68 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -424,6 +434,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Starter Kit/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Starter-Kit-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -452,6 +463,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Starter Kit/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Starter-Kit-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -582,6 +594,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EB32D4BB2CDE8EDA000D4F68 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EB32D4BC2CDE8EDA000D4F68 /* MapboxMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EB32D4BB2CDE8EDA000D4F68 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
+			productName = MapboxMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EB32D4862CDE80F1000D4F68 /* Project object */;
 }
