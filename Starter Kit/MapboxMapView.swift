@@ -27,11 +27,13 @@ struct MapboxMapView: UIViewRepresentable {
     
     private func setupLayerTapGesture(for mapView: MapView) {
         // Handle taps on the specified layer
-        mapView.gestures.onLayerTap("dog-groomers-boston-23w4aa") { feature, context in
-            print("Tap on dog groomers feature \(feature) at \(context.coordinate)")
+        mapView.gestures.onLayerTap("dog-groomers-boston-marker1") { queriedFeature, _ in
+            if let firstFeature = queriedFeature.feature.properties,
+               case let .string(storeName) = firstFeature["storeName"] {
+                print("You selected \(storeName)")
+            }
             return true
-        }
-        .store(in: &gestureTokens.tokens)
+        }.store(in: &gestureTokens.tokens)
     }
 }
 
