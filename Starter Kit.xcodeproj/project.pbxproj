@@ -17,6 +17,7 @@
 		EB32D4BD2CDE8EDA000D4F68 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = EB32D4BC2CDE8EDA000D4F68 /* MapboxMaps */; };
 		EB32D4C42CDEA28D000D4F68 /* MapboxMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB32D4C32CDEA28D000D4F68 /* MapboxMapView.swift */; };
 		EB32D4C62CDEA3F2000D4F68 /* GestureTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB32D4C52CDEA3F2000D4F68 /* GestureTokens.swift */; };
+		EB8EC2F52CE2928800E9221B /* DrawerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8EC2F42CE2928800E9221B /* DrawerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		EB32D4BE2CDE9003000D4F68 /* Starter-Kit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Starter-Kit-Info.plist"; sourceTree = SOURCE_ROOT; };
 		EB32D4C32CDEA28D000D4F68 /* MapboxMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapboxMapView.swift; sourceTree = "<group>"; };
 		EB32D4C52CDEA3F2000D4F68 /* GestureTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureTokens.swift; sourceTree = "<group>"; };
+		EB8EC2F42CE2928800E9221B /* DrawerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				EB32D4BE2CDE9003000D4F68 /* Starter-Kit-Info.plist */,
 				EB32D4912CDE80F1000D4F68 /* Starter_KitApp.swift */,
 				EB32D4932CDE80F1000D4F68 /* ContentView.swift */,
+				EB8EC2F42CE2928800E9221B /* DrawerView.swift */,
 				EB32D4952CDE80F3000D4F68 /* Assets.xcassets */,
 				EB32D4972CDE80F3000D4F68 /* Preview Content */,
 				EB32D4C32CDEA28D000D4F68 /* MapboxMapView.swift */,
@@ -276,6 +279,7 @@
 				EB32D4942CDE80F1000D4F68 /* ContentView.swift in Sources */,
 				EB32D4C62CDEA3F2000D4F68 /* GestureTokens.swift in Sources */,
 				EB32D4C42CDEA28D000D4F68 /* MapboxMapView.swift in Sources */,
+				EB8EC2F52CE2928800E9221B /* DrawerView.swift in Sources */,
 				EB32D4922CDE80F1000D4F68 /* Starter_KitApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

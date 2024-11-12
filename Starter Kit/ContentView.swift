@@ -11,13 +11,28 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var gestureTokens = GestureTokens() // Mutable storage for tokens
+    @State private var selectedFeature: MapboxMapView.GroomerLocation? = nil
+
 
     var body: some View {
         let center = CLLocationCoordinate2D(latitude: 42.34942, longitude: -71.06403)
         let styleURI = StyleURI(rawValue: "mapbox://styles/examples/cm37hh1nx017n01qk2hngebzt") ?? .streets
 
-        MapboxMapView(center: center, styleURI: styleURI, gestureTokens: gestureTokens)
-            .edgesIgnoringSafeArea(.all)
+        ZStack {
+            // 1. Background layer: The Mapbox map view
+            MapboxMapView(center: center, styleURI: styleURI, gestureTokens: gestureTokens, selectedFeature: $selectedFeature)
+                .edgesIgnoringSafeArea(.all)
+            
+            // 2. Foreground layer: The drawer view, which will appear above the map
+            if let feature = selectedFeature {
+                DrawerView(feature: feature) {
+                    withAnimation {
+                        selectedFeature = nil
+                    }
+                }
+            }
+        }
+
     }
 }
 
