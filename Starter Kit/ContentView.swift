@@ -15,7 +15,10 @@ struct ContentView: View {
 
 
     var body: some View {
-        let center = CLLocationCoordinate2D(latitude: 42.34942, longitude: -71.06403)
+        let center = CLLocationCoordinate2D(
+            latitude: 42.34622,
+            longitude: -71.09290
+          )
         let styleURI = StyleURI(rawValue: "mapbox://styles/examples/cm37hh1nx017n01qk2hngebzt") ?? .streets
 
         ZStack {
@@ -30,7 +33,7 @@ struct ContentView: View {
                         selectedFeature = nil
                     }
                 }
-            }
+            } 
         }
 
     }

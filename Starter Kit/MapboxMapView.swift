@@ -14,16 +14,14 @@ struct MapboxMapView: UIViewRepresentable {
     let center: CLLocationCoordinate2D
     let styleURI: StyleURI
     @ObservedObject var gestureTokens: GestureTokens // Use the mutable tokens class
-    @Binding var selectedFeature: GroomerLocation? // Binding for selected feature name
-
+   @Binding var selectedFeature: GroomerLocation? // Binding for selected feature name
+  
     func makeUIView(context: Context) -> MapView {
         let mapInitOptions = MapInitOptions(
+            cameraOptions: CameraOptions(center: center, zoom: 8.5),
             styleURI: styleURI
         )
         let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
-        
-        // Center the map on initialization
-        mapView.camera.ease(to: CameraOptions(center: center, zoom: 10.5), duration: 0.5)
         
         // Set up tap gesture handling on the layer
         setupLayerTapGesture(for: mapView)
@@ -54,9 +52,10 @@ struct MapboxMapView: UIViewRepresentable {
                    phoneFormatted: (properties["phoneFormatted"] as? Turf.JSONValue)?.stringValue()
                )
                 
-                DispatchQueue.main.async {
-                    selectedFeature = selectedGroomerLocation
-                }
+              
+                // Use self.selectedFeature since selectedFeature is a @Binding passed down from the parent view
+                self.selectedFeature = selectedGroomerLocation
+            
             }
             return true
         }.store(in: &gestureTokens.tokens)
