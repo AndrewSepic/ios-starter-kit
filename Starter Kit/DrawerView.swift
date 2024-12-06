@@ -19,53 +19,71 @@ extension View {
 struct DrawerView: View {
     let feature: MapboxMapView.GroomerLocation
     var onDismiss: () -> Void
-    
-    // State for the feature dictionary, used for animation
+
     @State private var animatedFeature: MapboxMapView.GroomerLocation?
 
     var body: some View {
-        VStack {
-            Spacer() // Push drawer to bottom
-            
-            VStack(spacing: 16) {
-              Text((feature.storeName))
-                  .font(.headline)
-              
-            let addressText = feature.address + ", " + feature.city + " " + feature.postalCode
-                
-            InfoRow(imageName: "building", text: addressText)
-                
-            PhoneRow(phone: feature.phoneFormatted ?? "N/A")
-
-            Rating(rating: 2)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        
-                
-              
-              Button("Close") {
-                  onDismiss()
-              }
-              .padding(.top, 16)
-          }
-            .padding()
-            .frame(maxWidth: .infinity) // This makes the drawer full width
-            .background(Color.white)
-            .cornerRadius(12)
-            .shadow(radius: 10)
-            .transition(.move(edge: .bottom))
-            .onAppear {
+        ZStack(alignment: .topTrailing) {
+            VStack {
+                VStack(spacing: 16) {
+                    Text((feature.storeName))
+                        .font(.title)
+                        .padding(.vertical, 16)
+                    
+                    let addressText = feature.address + ", " + feature.city + " " + feature.postalCode
+                    
+                    InfoRow(imageName: "building", text: addressText)
+                    
+                    PhoneRow(phone: feature.phoneFormatted ?? "N/A")
+                    
+                    Rating(rating: feature.rating)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    // Remove the 'Close' button from the bottom
+                    // The close button is now in the top-right corner
+                    
+                }
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 32, trailing: 20))
+                .frame(maxWidth: .infinity)
+                .background(
+                    Color.white
+                        .ignoresSafeArea(.all)
+                )
+                .cornerRadius(12)
+                .shadow(radius: 10)
+                .transition(.move(edge: .bottom))
+                .onAppear {
                     // Initialize animatedFeature onAppear
                     animatedFeature = feature
                 }
-            .onChange(of: feature) { oldFeature, newFeature in
+                .onChange(of: feature) { oldFeature, newFeature in
                     // Trigger animation when feature changes
                     withAnimation(.easeInOut) {
                         animatedFeature = newFeature
                     }
                 }
                 .animation(.easeInOut, value: animatedFeature) // Animate based on changes to animatedFeature
+            }
+            //            .border(Color.red, width: 2) // highlight used to see computed view
+            
+            closeButton
         }
-        .edgesIgnoringSafeArea(.bottom)
+    }
+   
+    // Close button in top-right corner
+    var closeButton: some View {
+        Button(action: {
+              withAnimation {
+                  onDismiss()
+              }
+          }) {
+              Image(systemName: "xmark.circle.fill")
+                  .foregroundColor(.gray)
+                  .font(.system(size: 24))
+                  .padding()
+          }
+          .padding(.top, 0) // Adds some space from the top of the screen
+          .padding(.trailing, 0) // Adds some space from the right of the screen
     }
 }
 
@@ -98,7 +116,7 @@ struct PhoneRow: View {
         HStack {
             Image(systemName: "phone.fill")
                 .foregroundColor(.blue)
-                .font(.system(size: 24))
+                .font(.system(size: 16))
             
             // Make the phone number text tappable
             Button(action: {
@@ -117,11 +135,13 @@ struct PhoneRow: View {
 
 
 struct Rating: View {
-    let rating: Int?
+    let rating: Double?
     
     var body: some View {
+        
         HStack {
-            Text("Rating: \(rating ?? 0)/5")
+            // safely unwrap rating to a string representing the number
+            Text("Rating: \(rating.map { String(format: "%.1f", $0) } ?? "0")")
                 .font(.subheadline)
                 .bold()
             
@@ -129,15 +149,17 @@ struct Rating: View {
             // Loop to generate rating images
             ForEach(0..<5, id: \.self) { index in
                 if let rating = rating {
+                    // Round the rating to the nearest whole number
+                    let roundedRating = Int(rating.rounded())
                     Image(systemName: "pawprint.fill")
-                        .foregroundColor(index < rating ? .blue : .gray) // Color based on the rating
-                        .font(.system(size: 24))
+                        .foregroundColor(index < roundedRating ? .blue : .gray) // Color based on the rating
+                        .font(.system(size: 16))
                        
                 } else {
                     // Handle case when rating is nil, if necessary
                     Image(systemName: "pawprint.fill")
                         .foregroundColor(.gray) // Default to gray if rating is nil
-                        .font(.system(size: 24))
+                        .font(.system(size: 16))
                 }
             }
         }

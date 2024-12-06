@@ -21,10 +21,11 @@ struct ContentView: View {
           )
         let styleURI = StyleURI(rawValue: "mapbox://styles/examples/cm37hh1nx017n01qk2hngebzt") ?? .streets
 
-        ZStack {
+        ZStack(alignment: .bottom) {
             // 1. Background layer: The Mapbox map view
             MapboxMapView(center: center, styleURI: styleURI, gestureTokens: gestureTokens, selectedFeature: $selectedFeature)
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea(.all)
+                
             
             // 2. Foreground layer: The drawer view, which will appear above the map
             if let feature = selectedFeature {
@@ -33,9 +34,8 @@ struct ContentView: View {
                         selectedFeature = nil
                     }
                 }
-            } 
+            }
         }
-
     }
 }
 
