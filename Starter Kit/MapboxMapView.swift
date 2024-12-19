@@ -16,7 +16,8 @@ struct MapboxMapView: UIViewRepresentable {
     let center: CLLocationCoordinate2D
     let styleURI: StyleURI
     @ObservedObject var gestureTokens: GestureTokens // Use the mutable tokens class
-   @Binding var selectedFeature: GroomerLocation? // Binding for selected feature name
+    @Binding var selectedFeature: GroomerLocation? // Binding for selected feature name
+    var onMapViewCreated: ((MapView) -> Void)? // Closure to pass back MapView
   
     func makeUIView(context: Context) -> MapView {
         let mapInitOptions = MapInitOptions(
@@ -24,10 +25,17 @@ struct MapboxMapView: UIViewRepresentable {
             styleURI: styleURI
         )
         let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
+
+        // Use dispatch to make sure the closure is executed after the map view is initialized.
+          DispatchQueue.main.async {
+              if let onMapViewCreated = onMapViewCreated {
+                  onMapViewCreated(mapView)
+              }
+          }
         
         // Set up tap gesture handling on the layer
         setupLayerTapGesture(for: mapView)
-        
+
         return mapView
     }
 

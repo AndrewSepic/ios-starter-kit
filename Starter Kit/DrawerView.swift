@@ -38,17 +38,14 @@ struct DrawerView: View {
                     
                     Rating(rating: feature.rating)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    // Remove the 'Close' button from the bottom
-                    // The close button is now in the top-right corner
-                    
                 }
                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 32, trailing: 20))
                 .frame(maxWidth: .infinity)
                 .background(
                     Color.white
-                        .ignoresSafeArea(.all)
+                        .ignoresSafeArea(edges: .bottom)
                 )
+                .ignoresSafeArea(edges: .bottom)
                 .cornerRadius(12)
                 .shadow(radius: 10)
                 .transition(.move(edge: .bottom))
@@ -64,7 +61,7 @@ struct DrawerView: View {
                 }
                 .animation(.easeInOut, value: animatedFeature) // Animate based on changes to animatedFeature
             }
-            //            .border(Color.red, width: 2) // highlight used to see computed view
+            //.border(Color.red, width: 2) // highlight to see computed view
             
             closeButton
         }
