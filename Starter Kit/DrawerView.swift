@@ -39,7 +39,7 @@ struct DrawerView: View {
                     Rating(rating: feature.rating)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(EdgeInsets(top: 10, leading: 20, bottom: 32, trailing: 20))
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 40, trailing: 20))
                 .frame(maxWidth: .infinity)
                 .background(
                     Color.white
