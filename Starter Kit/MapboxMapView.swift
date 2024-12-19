@@ -25,6 +25,9 @@ struct MapboxMapView: UIViewRepresentable {
             styleURI: styleURI
         )
         let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
+        
+        mapView.ornaments.options.compass.visibility = .hidden
+        mapView.ornaments.options.scaleBar.visibility = .hidden
 
         // Use dispatch to make sure the closure is executed after the map view is initialized.
           DispatchQueue.main.async {

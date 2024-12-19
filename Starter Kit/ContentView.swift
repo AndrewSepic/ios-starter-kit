@@ -32,33 +32,42 @@ struct ContentView: View {
                 }
             )
             .ignoresSafeArea(.all)
-
-            Button(action: {
-                if let mapView = mapView {
-                    print("mapView is non-nil")  // Confirm if the mapView exists at this point
-                    flyToRandomFeature(mapView: mapView, sourceId: "dog-groomers-boston-marker") { selected in
-                        selectedFeature = selected
+            
+            VStack(
+                alignment: .leading,
+                spacing: 10
+            ) {
+                HStack {
+                    Button(action: {
+                        if let mapView = mapView {
+                            flyToRandomFeature(mapView: mapView, sourceId: "dog-groomers-boston-marker") { selected in
+                                selectedFeature = selected
+                            }
+                        }
+                    }) {
+                        Text("Fly to a Groomer")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
                     }
-                } else {
-                    print("mapView is nil")
+                    .controlSize(.mini) // Reduce button size
+                    .padding() // Add padding to the top
+                    Spacer()
                 }
-            }) {
-                Text("Fly to a Groomer")
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                Spacer()
             }
-            .padding()
-
+            
             if let feature = selectedFeature {
-                DrawerView(feature: feature) {
-                    withAnimation {
-                        selectedFeature = nil
-                    }
-                }
-            }
+                   DrawerView(feature: feature) {
+                       withAnimation {
+                           selectedFeature = nil
+                       }
+                   }
+                   .transition(.move(edge: .bottom))
+               }
         }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
