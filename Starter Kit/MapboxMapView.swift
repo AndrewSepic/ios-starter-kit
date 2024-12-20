@@ -10,8 +10,6 @@ extension Turf.JSONValue {
     }
 }
 
-// TODO - Remove scale & compass on map
-
 struct MapboxMapView: UIViewRepresentable {
     let center: CLLocationCoordinate2D
     let styleURI: StyleURI
@@ -26,6 +24,7 @@ struct MapboxMapView: UIViewRepresentable {
         )
         let mapView = MapView(frame: .zero, mapInitOptions: mapInitOptions)
         
+        // Removes scale & compass on map
         mapView.ornaments.options.compass.visibility = .hidden
         mapView.ornaments.options.scaleBar.visibility = .hidden
 

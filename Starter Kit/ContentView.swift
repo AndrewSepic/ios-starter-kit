@@ -13,6 +13,11 @@ struct ContentView: View {
     @StateObject private var gestureTokens = GestureTokens()
     @State private var selectedFeature: MapboxMapView.GroomerLocation? = nil
     @State private var mapView: MapView? = nil
+    @State private var hasInteracted = false
+    
+    // Hold a strong reference to the gesture delegate
+    @State private var gestureDelegate: GestureManagerDelegateImplementation?
+
 
     var body: some View {
         let center = CLLocationCoordinate2D(
@@ -20,7 +25,7 @@ struct ContentView: View {
             longitude: -71.09290
         )
         let styleURI = StyleURI(rawValue: "mapbox://styles/examples/cm37hh1nx017n01qk2hngebzt") ?? .streets
-
+        
         ZStack(alignment: .bottom) {
             MapboxMapView(
                 center: center,
@@ -29,8 +34,18 @@ struct ContentView: View {
                 selectedFeature: $selectedFeature,
                 onMapViewCreated: { mapView in
                     self.mapView = mapView
-                }
-            )
+                    // Create and retain the gesture delegate
+                   let delegate = GestureManagerDelegateImplementation { gestureType in
+                       DispatchQueue.main.async {
+                           self.hasInteracted = true
+                       }
+                   }
+                   
+                   // Assign the gesture delegate
+                   mapView.gestures.delegate = delegate
+                   self.gestureDelegate = delegate // Retain the delegate strongly
+                    
+                })
             .ignoresSafeArea(.all)
             
             VStack(
@@ -38,36 +53,63 @@ struct ContentView: View {
                 spacing: 10
             ) {
                 HStack {
-                    Button(action: {
-                        if let mapView = mapView {
-                            flyToRandomFeature(mapView: mapView, sourceId: "dog-groomers-boston-marker") { selected in
-                                selectedFeature = selected
-                            }
+                    if hasInteracted { // Only show button if interacted
+                        Button( action: {
+                            mapView?.camera.fly(to: CameraOptions(
+                                center: center,
+                                zoom: 8.5,
+                                bearing: 0,
+                                pitch: 0
+                            ), duration: 5.0)
+                        }) {
+                            Text("Reset Map")
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
                         }
-                    }) {
-                        Text("Fly to a Groomer")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                        .controlSize(.mini) // Reduce button size
+                        .padding() // Add padding to the top
+                        Spacer()
                     }
-                    .controlSize(.mini) // Reduce button size
-                    .padding() // Add padding to the top
-                    Spacer()
+                
                 }
                 Spacer()
             }
             
             if let feature = selectedFeature {
-                   DrawerView(feature: feature) {
-                       withAnimation {
-                           selectedFeature = nil
-                       }
-                   }
-                   .transition(.move(edge: .bottom))
-               }
+                DrawerView(feature: feature) {
+                    withAnimation {
+                        selectedFeature = nil
+                    }
+                }
+                .transition(.move(edge: .bottom))
+            }
         }
         .ignoresSafeArea(edges: .bottom)
+    }
+}
+
+// GestureManagerDelegate Implementation
+class GestureManagerDelegateImplementation: NSObject, GestureManagerDelegate {
+    var onGestureBegin: (GestureType) -> Void
+    
+    init(onGestureBegin: @escaping (GestureType) -> Void) {
+        self.onGestureBegin = onGestureBegin
+    }
+    
+    func gestureManager(_ gestureManager: GestureManager, didBegin gestureType: GestureType) {
+        // Notify when a gesture begins
+        onGestureBegin(gestureType)
+        print("\(gestureType) didBegin")
+    }
+
+    func gestureManager(_ gestureManager: GestureManager, didEnd gestureType: GestureType, willAnimate: Bool) {
+        print("\(gestureType) didEnd")
+    }
+
+    func gestureManager(_ gestureManager: GestureManager, didEndAnimatingFor gestureType: GestureType) {
+        print("didEndAnimatingFor \(gestureType)")
     }
 }
 
